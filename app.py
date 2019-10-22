@@ -12,13 +12,13 @@ f.close()
 #need to add the hostname in Container
 
 c = AvroConsumer({
-    'bootstrap.servers': 'kafka1:9092',
+    'bootstrap.servers': 'localhost:9092',
     'group.id': offset, 
-    'schema.registry.url': 'http://kafka1:8081',
+    'schema.registry.url': 'http://localhost:8081',
     'auto.offset.reset': 'smallest'})
 
 #RARS-PIAM is the avro topic
-c.subscribe(['RARS_PIAM'])
+c.subscribe(['OLD_TOPIC'])
 
 
 #every deploment will have a 
@@ -50,6 +50,6 @@ while True:
    
     print(msg.value())
     encoded_msg = str(msg.value()).encode('utf-8')
-    p.produce("RARS_EVENTS_JSON", encoded_msg)
+    p.produce("JSON_TOPIC", encoded_msg)
     print("Message Produced!"+ str(i))
 c.close()
